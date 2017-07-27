@@ -1,14 +1,25 @@
 import boto3
 
-print 'Starting RDS'
-
-
-
 client = boto3.client('rds', region_name='eu-central-1')
 
-response = client.start_db_instance(
+
+response = client.describe_db_instances(
     DBInstanceIdentifier='log2up'
 )
 
+current_status = response['DBInstances'][0]['DBInstanceStatus']
+print 'Current: ' + current_status
 
-print 'RDS started'
+if current_status=='stopped':
+    print 'Starting...'
+    response = client.start_db_instance(
+        DBInstanceIdentifier='log2up'
+    )
+    print 'Started!'
+
+if current_status=='started':
+    print 'Stopping...'
+    response = client.start_db_instance(
+        DBInstanceIdentifier='log2up'
+    )
+    print 'Stopped!'
