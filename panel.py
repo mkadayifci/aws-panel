@@ -17,9 +17,9 @@ if current_status=='stopped':
     )
     print 'Started!'
 
-if current_status=='started':
+if current_status=='available':
     print 'Stopping...'
-    response = client.start_db_instance(
+    response = client.stop_db_instance(
         DBInstanceIdentifier='log2up'
     )
     print 'Stopped!'
